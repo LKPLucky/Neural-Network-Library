@@ -3,17 +3,17 @@
 
 class Dense : public Layer
 {
-//private:
-public:
+private:
     Tensor InputCache;
-    Tensor OutputCache;
+    Tensor OutputCache_PreActivation;
+    Tensor OutputCache_PostActivation;
     Tensor Weights;
     Tensor Bias;
     string Activation;
     int OutChannels;
     bool FirstPass;
 
-//public:
+public:
 
     // Constructor
     Dense(int out_c, string A = "none");
@@ -27,5 +27,9 @@ public:
     // INITIAILIZE WEIGHTS
     void InitializeWeights() override;
 
-    // Calculate Output
+    // APPLY ACTIVATION FUNCTION
+    void Activate(Tensor& input) override;
+
+    // ADD BIASES
+    void AddBias(Tensor& input) override;
 };

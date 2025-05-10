@@ -24,6 +24,34 @@ void Dense::InitializeWeights()
     FirstPass = false;
 }
 
+void Dense::Activate(Tensor& input)
+{
+    if (Activation == "relu")
+    {
+        OutputCache_PostActivation = ReLU(input);
+    }
+    else if (Activation == "softmax")
+    {
+        OutputCache_PostActivation = SoftMax(input);
+    }
+    else if (Activation == "sigmoid")
+    {
+        OutputCache_PostActivation = Sigmoid(input);
+    }
+    else // No Activvation Function used
+    {
+        OutputCache_PostActivation = input; 
+    }
+}
+
+void Dense::AddBias(Tensor& input)
+{
+    for (int i = 0; i < input.Data.size(); i++)
+    {
+        input(i) = input(i) + Bias(i);
+    }
+}
+
 void Dense::Forward(Tensor& input) 
 {
     InputCache = input;
@@ -32,5 +60,7 @@ void Dense::Forward(Tensor& input)
         InitializeWeights();
         InitializeBiases();
     }
-    OutputCache = input = MatMult(input, Weights);
+    OutputCache_PreActivation = input = MatMult(input, Weights);
+    AddBias(input);
+    Activate(input);
 }
