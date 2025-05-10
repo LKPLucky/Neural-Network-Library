@@ -20,23 +20,19 @@ double rand_uniform(double min, double max) {
 
 void He_Init(Tensor& input, int fan_in)
 {
-    vector<double> temp;
     double stddev = sqrt(2.0 / fan_in);
     for (int i = 0; i < input.Data.size(); i++)
     {
-        temp.push_back(rand_normal(0, stddev));
+        input(i) = rand_normal(0, stddev);
     }
-    input.Data = temp;
 }
 
 
 void Xavier_Init(Tensor& input, int fan_in, int fan_out)
 {
-    vector<double> temp;
     double limit = sqrt(6.0 / (fan_in + fan_out));
     for (int i = 0; i < input.Data.size(); i++)
     {
-        temp.push_back(rand_uniform(-limit, limit));
+        input(i) = rand_uniform(-limit, limit);
     }
-    input.Data = temp;
 }
