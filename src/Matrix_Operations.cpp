@@ -1,71 +1,5 @@
 #include "..\headers\Matrix_Operations.hpp"
 
-// Transpose a Matrix
-vector<vector<double>> Transpose(vector<vector<double>> &matrix)
-{
-    // Get Rows and Cols of Matrix
-    int rows = matrix.size();
-    int cols = matrix[0].size();
-
-    // Make a new matrix to store Transposed matrix temporarily
-    vector<vector<double>> temp_matrix;
-
-    // Transposing Matrix (Turning Rows into Cols) 
-    vector<double> temp_row;
-    for (int i = 0; i < cols; i++)
-    {
-        temp_row.clear();
-        for (int j = 0; j < rows; j++)
-        {
-            temp_row.push_back(matrix[j][i]);
-        }
-        temp_matrix.push_back(temp_row);
-    }
-
-    return temp_matrix;
-}
-
-// Overload + Operator to add two vectors
-vector<double> operator+(const vector<double>& vecA, const vector<double>& vecB)
-{
-    vector<double> temp_vec;
-    if (vecA.size() > vecB.size())
-    {
-        for (int i = 0; i < vecB.size(); i++)
-        {
-            temp_vec.push_back(vecA[i] + vecB[i]);
-        }
-        for (int i = vecB.size(); i < vecA.size(); i++)
-        {
-            temp_vec.push_back(vecA[i]);
-        }
-    }
-    else
-    {
-        for (int i = 0; i < vecA.size(); i++)
-        {
-            temp_vec.push_back(vecA[i] + vecB[i]);
-        }
-        for (int i = vecA.size(); i < vecB.size(); i++)
-        {
-            temp_vec.push_back(vecB[i]);
-        }
-    }
-
-    return temp_vec;
-}
-
-// Dot Product
-double DotProduct(vector<double> vecA, vector<double> vecB)
-{
-    double Result = 0.0;
-    for (int i = 0; i < vecA.size(); i++)
-    {
-        Result += vecA[i] * vecB[i];
-    }
-    return Result;
-}
-
 // Mat Mult
 Tensor MatMult(Tensor& matA, Tensor& matB)
 {
@@ -112,5 +46,61 @@ void Display(Tensor& input)
             cout << "}" << endl;
         }
         cout << "}" << endl;
+    }
+}
+
+// Find Horizontal Padding Amount
+int FindPadH(const Tensor& input, const Tensor& Kernel, int Stride)
+{
+    int pad = Kernel.Dim1;
+    while (pad < input.Dim1)
+    {
+        pad += Stride;
+    }
+    return pad % input.Dim1;
+}
+
+// Find Vertical Padding Amount
+int FindPadV(const Tensor& input, const Tensor& Kernel, int Stride)
+{
+    int pad = Kernel.Dim2;
+    while (pad < input.Dim2)
+    {
+        pad += Stride;
+    }
+    return pad % input.Dim2;
+}
+
+// Zero Padding
+void ZeroPadding(Tensor& input, Tensor& Kernel, int Stride)
+{
+    int pad = FindPadH(input, Kernel, Stride);
+    if (pad != 0) // HORIZONTAL
+    { 
+        for (int i = 0; i < pad; i++)
+        {
+            for (int j = input.Data.size(); j > 0; j -= input.Dim1)
+            {
+                input.Data.insert(input.Data.begin() + j, 0.0);
+            }
+            input.Dim1++;
+        }
+
+    }
+    pad = FindPadV(input, Kernel, Stride);
+    if (pad != 0) // VERTICAL
+    { 
+        for (int i = 0; i < pad; i++)
+        {
+            for (int j = input.Data.size(); j > 0; j -= input.Dim1 * input.Dim2)
+            {
+                for (int k = 0; k < input.Dim1; k++)
+                {
+                    input.Data.insert(input.Data.begin() + j, 0.0);
+                }
+            }
+            input.Dim2++;
+        }
+
     }
 }

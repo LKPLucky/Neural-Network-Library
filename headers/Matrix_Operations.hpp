@@ -8,18 +8,23 @@ using namespace std;
 // Transpose a Matrix
 // vector<vector<double>> Transpose(vector<vector<double>> &matrix);
 
-// Display a Matrix
-void Display(vector<vector<double>>& matrix);
-
-// Mat Mult
-vector<vector<double>> MatMult(vector<vector<double>> &matrix1, vector<vector<double>> &matrix2);
-
 // Overload + Operator to add two vectors
 vector<double> operator+(const vector<double>& vecA, const vector<double>& vecB);
 
 // Dot Product
 double DotProduct(vector<double> vecA, vector<double> vecB);
 
+// Mat Mult
 Tensor MatMult(Tensor& matA, Tensor& matB);
 
+// Display
 void Display(Tensor& input);
+
+// Find Horizontal Padding Amount
+int FindPadH(const Tensor& input, const Tensor& Kernel, int Stride);
+
+// Find Vertical Padding Amount
+int FindPadV(const Tensor& input, const Tensor& Kernel, int Stride);
+
+// Zero Padding
+void ZeroPadding(Tensor& input, Tensor& Kernel, int Stride);
