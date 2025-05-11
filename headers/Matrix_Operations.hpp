@@ -4,16 +4,6 @@
 #include "..\headers\Tensor.hpp"
 using namespace std;
 
-
-// Transpose a Matrix
-// vector<vector<double>> Transpose(vector<vector<double>> &matrix);
-
-// Overload + Operator to add two vectors
-vector<double> operator+(const vector<double>& vecA, const vector<double>& vecB);
-
-// Dot Product
-double DotProduct(vector<double> vecA, vector<double> vecB);
-
 // Mat Mult
 Tensor MatMult(Tensor& matA, Tensor& matB);
 
