@@ -44,7 +44,7 @@ void Conv2D::InitializeWeights()
 void Conv2D::Convolution(Tensor& input)
 {
     input.Dim1 = ((input.Dim1 - Weights.Dim1) / Stride) + 1;
-    input.Dim2 = ((input.Dim2 - Weights.Dim3) / Stride) + 1;
+    input.Dim2 = ((input.Dim2 - Weights.Dim2) / Stride) + 1;
     input.Dim3 = Weights.Dim4;
     input.Dim4 = 1;
     input.Data.resize(input.Dim1 * input.Dim2 * input.Dim3 * input.Dim4, 0.0);
@@ -54,7 +54,7 @@ void Conv2D::Convolution(Tensor& input)
     int y_off = 0;
     for (int i = 0; i < Weights.Dim4; i++) // NO. OF FILTERS
     {
-        for (int j = 0; j < InputCache.Dim3; j++) // NO. OF MATRICES PER FILTER
+        for (int j = 0; j < InputCache.Dim3; j++) // NO. OF CHANNELS PER FILTER
         {
             for (int k = 0; k < input.Dim2; k++) // OUTPUT ROWS
             {

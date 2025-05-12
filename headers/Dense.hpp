@@ -13,11 +13,6 @@ private:
     int OutChannels;
     bool FirstPass;
 
-public:
-
-    // Constructor
-    Dense(int out_c, string A = "none");
-
     // Forward Pass
     void Forward(Tensor& input) override;
 
@@ -32,4 +27,10 @@ public:
 
     // ADD BIASES
     void AddBias(Tensor& input) override;
+
+public:
+
+    // Constructor
+    Dense(int out_c, string A = "none");
+
 };

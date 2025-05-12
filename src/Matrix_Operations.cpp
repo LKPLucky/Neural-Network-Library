@@ -30,10 +30,10 @@ void Display(Tensor& input)
 {
     for (int i = 0; i < input.Dim4; i++)
     {
-        cout << "{ " << endl;
+        cout << "{ ";
         for (int j = 0; j < input.Dim3; j++)
         {
-            cout << "{ " << endl;
+            cout << "{ ";
             for (int k = 0; k < input.Dim2; k++)
             {
                 cout << "{ ";
@@ -72,7 +72,7 @@ int FindPadV(const Tensor& input, const Tensor& Kernel, int Stride)
 }
 
 // Zero Padding
-void ZeroPadding(Tensor& input, Tensor& Kernel, int Stride)
+void ZeroPadding(Tensor& input, Tensor Kernel, int Stride)
 {
     int pad = FindPadH(input, Kernel, Stride);
     if (pad != 0) // HORIZONTAL

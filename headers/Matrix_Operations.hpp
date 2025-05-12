@@ -17,4 +17,4 @@ int FindPadH(const Tensor& input, const Tensor& Kernel, int Stride);
 int FindPadV(const Tensor& input, const Tensor& Kernel, int Stride);
 
 // Zero Padding
-void ZeroPadding(Tensor& input, Tensor& Kernel, int Stride);
+void ZeroPadding(Tensor& input, Tensor Kernel, int Stride);

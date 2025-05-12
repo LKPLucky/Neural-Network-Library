@@ -3,8 +3,7 @@
 
 class Conv2D : public Layer
 {
-// private:
-public:
+private:
     Tensor InputCache;
     Tensor OutputCache_PreActivation;
     Tensor OutputCache_PostActivation;
@@ -13,11 +12,6 @@ public:
     int Stride;
     bool FirstPass;
     string Activation;
-
-// public:
-
-    // Constructor
-    Conv2D (int F = 1, int KW = 1, int KH = 1, int KC = 1, int S = 1, string A = "none");
 
     // INITIALIZE BIASES
     void InitializeBiases(double val = 0.01) override;
@@ -35,5 +29,10 @@ public:
 
     // ADD BIASES
     void AddBias(Tensor& input) override;
-    
+
+public:
+
+    // Constructor
+    Conv2D (int F = 1, int KW = 1, int KH = 1, int KC = 1, int S = 1, string A = "none");
+
 };
