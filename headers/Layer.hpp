@@ -10,20 +10,8 @@ using namespace std;
 
 class Layer {
     
-public:
-
-    // INITIALIZE WEIGHTS
-    virtual void InitializeWeights() = 0;
-    // INITIALIZE BIASES
-    virtual void InitializeBiases(double val) = 0;
-
-    // APPLY ACTIVATION FUNCTION
-    virtual void Activate(Tensor& input) = 0;
-    // ADD BIASES
-    virtual void AddBias(Tensor& input) = 0;
-    
-
+private:
     virtual void Forward(Tensor& input) = 0;
-    // virtual void back_propogation();
-    
+    virtual void Backward(Tensor& d_out, const double LR) = 0;
+    virtual void UpdateWeights_and_Bias_and_DInput(Tensor& d_out, const double LR) = 0;
 };
