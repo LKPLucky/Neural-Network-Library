@@ -9,8 +9,9 @@
                 "-g",
                 "${file}",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe",
-                "${workspaceFolder}\\src\\*.cpp"
+                "${workspaceFolder}\\src\\*.cpp",
+                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+
             ],
             "options": {
                 "cwd": "${fileDirname}"

@@ -51,13 +51,24 @@ void MaxPool2D::FindMax(Tensor& input)
 
 void MaxPool2D::Activate(Tensor& input)
 {
+    transform(Activation.begin(), Activation.end(), Activation.begin(),
+    [](unsigned char c){ return tolower(c);});
+
     if (Activation == "relu")
     {
-        ReLU(input);
+        OutputCache = ReLU(input);
     }
     else if (Activation == "sigmoid")
     {
-        Sigmoid(input);
+        OutputCache = Sigmoid(input);
+    }
+    else if (Activation == "SoftMax")
+    {
+        OutputCache = SoftMax(input);
+    }
+    else // No Activvation Function used
+    {
+        OutputCache = input; 
     }
 };
 
@@ -70,6 +81,10 @@ void MaxPool2D::ActivationDerivative(Tensor& d_out)
     else if (Activation == "sigmoid")
     {
         SigmoidDerivative(d_out, OutputCache);
+    }
+    else if (Activation == "softmax")
+    {
+        SoftMaxDerivative(d_out, OutputCache);
     }
 }
 

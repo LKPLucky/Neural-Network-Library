@@ -16,24 +16,28 @@ private:
     // Forward Pass
     void Forward(Tensor& input) override;
 
-    // INITIALIZE BIASES
-    void InitializeBiases(double val = 0.01) override;
-
-    // INITIAILIZE WEIGHTS
-    void InitializeWeights() override;
-
-    // APPLY ACTIVATION FUNCTION
-    void Activate(Tensor& input) override;
-
-    // ADD BIASES
-    void AddBias(Tensor& input) override;
-
     // BACK PROPOGATION
     void Backward(Tensor& d_out, const double LR) override;
+    
+    void UpdateWeights_and_Bias_and_DInput(Tensor& d_out, const double LR) override;
+
+    // INITIALIZE BIASES
+    void InitializeBiases(double val = 0.01);
+
+    // INITIAILIZE WEIGHTS
+    void InitializeWeights();
+
+    // APPLY ACTIVATION FUNCTION
+    void Activate(Tensor& input);
+
+    // ADD BIASES
+    void AddBias(Tensor& input);
+
+    
 
     void ActivationDerivative(Tensor& d_out);
 
-    void UpdateWeights_and_Bias_and_DInput(Tensor& d_out, const double LR) override;
+    
 
 public:
 

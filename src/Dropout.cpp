@@ -6,6 +6,7 @@ void Dropout::GenerateMask(Tensor& input)
 {
     if (input.Dim3 > 1)
     {
+        Mask.resize(input.Dim3);
         for (int i = 0; i < input.Dim3; i++)
         {
             Mask.push_back(rand() % 2);

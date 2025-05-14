@@ -72,6 +72,9 @@ void Conv2D::Convolution(Tensor& input)
 
 void Conv2D::Activate(Tensor& input)
 {
+    transform(Activation.begin(), Activation.end(), Activation.begin(),
+    [](unsigned char c){ return tolower(c);});
+
     if (Activation == "relu")
     {
         OutputCache = ReLU(input);
@@ -79,6 +82,10 @@ void Conv2D::Activate(Tensor& input)
     else if (Activation == "sigmoid")
     {
         OutputCache = Sigmoid(input);
+    }
+    else if (Activation == "SoftMax")
+    {
+        OutputCache = SoftMax(input);
     }
     else // No Activvation Function used
     {

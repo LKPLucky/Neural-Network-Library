@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cmath>
+#include <algorithm>
 #include "..\headers\Tensor.hpp"
 using namespace std;
 
@@ -15,6 +16,6 @@ Tensor Sigmoid(Tensor& input);
 
 void ReLUDerivative(Tensor& d_out, Tensor IO);
 
-void SoftMaxPlusCrossEntropyDerivative(Tensor& d_out, Tensor IO);
+void SoftMaxDerivative(Tensor& d_out, Tensor IO);
 
 void SigmoidDerivative(Tensor& d_out, Tensor IO);

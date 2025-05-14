@@ -36,10 +36,6 @@ private:
     // ADD BIASES
     void AddBias(Tensor& input);
 
-    
-    
-    
-
     void ActivationDerivative(Tensor& d_out);
 
 public:
