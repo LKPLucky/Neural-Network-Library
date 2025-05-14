@@ -12,3 +12,9 @@ Tensor SoftMax(Tensor& input);
 
 // Sigmoid Activation Function
 Tensor Sigmoid(Tensor& input);
+
+void ReLUDerivative(Tensor& d_out, Tensor IO);
+
+void SoftMaxPlusCrossEntropyDerivative(Tensor& d_out, Tensor IO);
+
+void SigmoidDerivative(Tensor& d_out, Tensor IO);

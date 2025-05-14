@@ -34,3 +34,28 @@ Tensor Sigmoid(Tensor& input)
     }
     return input;
 }
+
+void ReLUDerivative(Tensor& d_out, Tensor IO)
+{
+    for (int i = 0; i < d_out.Data.size(); i++)
+    {
+        if (IO(i) == 0)
+        {
+            d_out(i) = 0.0;
+        }
+    }
+}
+
+void SoftMaxPlusCrossEntropyDerivative(Tensor& d_out, Tensor True)
+{
+    d_out = SoftMax(d_out);
+    d_out = d_out - True;
+}
+
+void SigmoidDerivative(Tensor& d_out, Tensor IO)
+{
+    for (int i = 0; i < d_out.Data.size(); i++)
+    {
+        d_out(i) = d_out(i) * (1 - d_out(i));
+    }    
+}
