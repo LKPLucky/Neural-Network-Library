@@ -16,5 +16,25 @@ double& Tensor::operator()(int x, int y, int z, int f)
     return Data[(f * Dim1 * Dim2 * Dim3) + (z * Dim1 * Dim2) + (y * Dim1) + x];
 }
 
+Tensor operator-(const Tensor& A, const Tensor& B)
+{
+    Tensor Result(A.Dim1, A.Dim2, A.Dim3, A.Dim4);
+
+    for (int i = 0; i < A.Data.size(); ++i) {
+        Result.Data[i] = A.Data[i] - B.Data[i];
+    }
+
+    return Result;
+}
+
+Tensor operator*(Tensor& A, double val)
+{
+    Tensor Result(A.Dim1, A.Dim2, A.Dim3, A.Dim4);
+    for (int i = 0; i < A.Data.size(); ++i)
+    {
+        Result(i) = A(i) * val;  
+    }
+    return Result;
+}
 
 

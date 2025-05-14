@@ -21,5 +21,8 @@ struct Tensor
     double& operator()(int x, int y = 0, int z = 0, int f = 0);
 
     void Display() const;
-    
 };
+
+Tensor operator-(const Tensor& A, const Tensor& B);
+
+Tensor operator*(Tensor& A, double val);
