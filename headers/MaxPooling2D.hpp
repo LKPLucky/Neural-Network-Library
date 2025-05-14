@@ -8,24 +8,30 @@ private:
     int Stride;
     int KernelHeight;
     int KernelWidth;
+    string Activation;
+    Tensor OutputCache;
+    vector<vector<int>> Max_Coords;
 
     // FORWARD PASS
-    void Forward(Tensor& input);
+    void Forward(Tensor& input) override;
 
+    // BACKWARD PASS
+    void Backward(Tensor& d_out, const double LR) override;
+
+    // FIND OUTPUT
     void FindMax(Tensor& input);
 
-    // INITIALIZE WEIGHTS
-    virtual void InitializeWeights() override;
-    // INITIALIZE BIASES
-    virtual void InitializeBiases(double val) override;
     // APPLY ACTIVATION FUNCTION
-    virtual void Activate(Tensor& input) override;
-    // ADD BIASES
-    virtual void AddBias(Tensor& input) override;
+    virtual void Activate(Tensor& input);
+
+    // FIND ACTIVATION DERIVATIVE
+    void ActivationDerivative(Tensor& d_out);
+
+    void UpdateWeights_and_Bias_and_DInput(Tensor& d_out, const double LR) override;
 
 public:
 
     // CONSTRUCTOR
-    MaxPool2D(int KH, int KW, int S);
+    MaxPool2D(int KH, int KW, int S, string A = "none");
 
 };
