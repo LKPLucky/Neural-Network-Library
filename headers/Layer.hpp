@@ -14,4 +14,5 @@ private:
     virtual void Forward(Tensor& input) = 0;
     virtual void Backward(Tensor& d_out, const double LR) = 0;
     virtual void UpdateWeights_and_Bias_and_DInput(Tensor& d_out, const double LR) = 0;
+    virtual void SetTraining(bool IsT) {};
 };
