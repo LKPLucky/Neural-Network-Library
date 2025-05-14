@@ -6,7 +6,7 @@ void Dense::InitializeBiases(double val)
 {
     for (int i = 0; i < Bias.Data.size(); i++)
     {
-        Bias.Data[i] = val;
+        Bias(i) = val;
     }
 }
 
@@ -28,19 +28,11 @@ void Dense::Activate(Tensor& input)
 {
     if (Activation == "relu")
     {
-        OutputCache_PostActivation = ReLU(input);
-    }
-    else if (Activation == "softmax")
-    {
-        OutputCache_PostActivation = SoftMax(input);
+        ReLU(input);
     }
     else if (Activation == "sigmoid")
     {
-        OutputCache_PostActivation = Sigmoid(input);
-    }
-    else // No Activvation Function used
-    {
-        OutputCache_PostActivation = input; 
+        Sigmoid(input);
     }
 }
 
@@ -60,7 +52,44 @@ void Dense::Forward(Tensor& input)
         InitializeWeights();
         InitializeBiases();
     }
-    OutputCache_PreActivation = input = MatMult(input, Weights);
+    input = MatMult(input, Weights);
     AddBias(input);
     Activate(input);
+    OutputCache = input;
+}
+
+void Dense::ActivationDerivative(Tensor& d_out)
+{
+    if (Activation == "relu")
+    {
+        ReLUDerivative(d_out, OutputCache);
+    }
+    else if (Activation == "sigmoid")
+    {
+        SigmoidDerivative(d_out, OutputCache);
+    }
+}
+
+void Dense::Backward(Tensor& d_out, const double LR)
+{
+    ActivationDerivative(d_out);
+    UpdateWeights_and_Bias_and_DInput(d_out, LR);
+}
+
+void Dense::UpdateWeights_and_Bias_and_DInput(Tensor& d_out, const double LR)
+{
+    Tensor d_input(InputCache.Dim1);
+    Tensor TempWeights(Weights);
+    d_input.Data.assign(d_input.Data.size(), 0.0);
+    for (int i = 0; i < Weights.Dim1; i++) // NO. OF NEURONS
+    {
+        for (int j = 0; j < Weights.Dim2; j++) // NO. OF WEIGHTS PER NEURON
+        {
+            TempWeights(i, j) -= (LR * (d_out(i) * InputCache(j)));
+            d_input(j) += d_out(i) * Weights(i, j);
+        }
+        Bias(i) -= LR * d_out(i);
+    }
+    d_out = d_input;
+    Weights = TempWeights;
 }

@@ -5,8 +5,8 @@ class Dense : public Layer
 {
 private:
     Tensor InputCache;
-    Tensor OutputCache_PreActivation;
-    Tensor OutputCache_PostActivation;
+    // Tensor OutputCache_PreActivation;
+    Tensor OutputCache;
     Tensor Weights;
     Tensor Bias;
     string Activation;
@@ -27,6 +27,13 @@ private:
 
     // ADD BIASES
     void AddBias(Tensor& input) override;
+
+    // BACK PROPOGATION
+    void Backward(Tensor& d_out, const double LR) override;
+
+    void ActivationDerivative(Tensor& d_out);
+
+    void UpdateWeights_and_Bias_and_DInput(Tensor& d_out, const double LR) override;
 
 public:
 
